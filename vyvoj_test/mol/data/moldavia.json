@@ -1,0 +1,53 @@
+{
+  "projection":"EPSG:3857",
+  "map":{
+    "center":[3172499.3773779627, 5783219.338738712],
+    "zoom":10,
+    "baseResolution":156543.03391,
+    "resolutionsLevels":21
+  },
+  "layers":[
+    {
+      "type":"osm",
+      "config":{
+        "name":"osm",
+        "baselayer":true,
+        "visible":true,
+        "alpha":0,
+        "reload":0,
+        "tags":["podkladovka"]
+        }
+    },
+    {
+      "type":"geojson",
+      "specs":{
+        "path":"./data/wells.geojson",
+        "styleId":1,
+        "style":"stylefunction",
+        "sourceProjection":"EPSG:4326",
+        "destinationProjection":"EPSG:3857"
+      },
+      "config":{
+        "id":"wells",
+        "name":"First vector",
+        "baselayer":false,
+        "visible":true,
+        "tags":["Vector","aaa"],
+        "events":["feature:click"]
+        }
+    }
+  ],
+  "theme":{
+  },
+  "styles":[
+    {
+      "id":1,
+      "def":{
+        "image": {
+          "src":"http://www.conradwelldrilling.com/images/drilled-wells-icon.png",
+          "scale":0.2
+         }
+      }
+    }
+  ]
+}
