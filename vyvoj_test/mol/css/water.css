@@ -13,7 +13,7 @@
   height:100%;
 }*/
 
-#data{
+#application{
   /*position:absolute;*/
 }
 
@@ -66,10 +66,12 @@
 }
 
 div .wellContent{
+  background-color: #FFF;
   max-width: 800px;
   margin: auto;
   text-align: justify;
   padding: 16px 32px;
+  margin-top: 51px;
 }
 
 .wellInfo table tr:not(:first-child) th,
@@ -85,4 +87,25 @@ div .wellContent{
   border: 0px;
   padding: 4px 8px 5px 9px;
   margin: 15px;
+}
+
+.filterForm{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 200px;
+  padding: 20px;
+  background-color: rgba(139, 186, 139, 0.56);
+}
+
+.fotowrapper{
+  position: relative;
+  height: 100px;
+  width: 200px;
+}
+
+.fotowrapper img{
+  position: absolute;
+  right: 0;
+  bottom: 0; 
 }
