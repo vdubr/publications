@@ -9,6 +9,7 @@ i18n = {
   clear: 'Clear',
   villageFilterPlaceholder: 'Enter name of village',
   null: 'null',
+  allItems: 'All items',
   extremely: 'Extremely',
   middle: 'Middle',
   low: 'Low',
@@ -21,10 +22,8 @@ i18n = {
   Obec: 'Village',
   BodRegionCislo: 'Region number',
 
-
   //second tab
   protection: 'Protection',
-
 
   //thirth tab
   measurement: 'Measurement',

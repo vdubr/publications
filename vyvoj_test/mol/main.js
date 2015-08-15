@@ -21808,9 +21808,20 @@ var ApplicationView = (function (_Component) {
             'div',
             null,
             _React['default'].createElement(_WellFilterView2['default'], null),
-            _React['default'].createElement('div', { className: 'logo-watersources' }),
-            _React['default'].createElement('div', { className: 'logo-cra' }),
-            _React['default'].createElement(_WellInfo2['default'], { activeTab: this.state.activeTab, isVisible: this.state.showWellInfo, data: this.state.wellInfo })
+            _React['default'].createElement('div', {
+              className: 'logo-watersources',
+              onClick: function () {
+                window.open('http://www.vodnizdroje.cz/', '_blank');
+              } }),
+            _React['default'].createElement('div', {
+              className: 'logo-cra',
+              onClick: function () {
+                window.open('http://www.czda.cz/', '_blank');
+              } }),
+            _React['default'].createElement(_WellInfo2['default'], {
+              activeTab: this.state.activeTab,
+              isVisible: this.state.showWellInfo,
+              data: this.state.wellInfo })
           )
         )
       );
@@ -22058,6 +22069,51 @@ var TableRow = (function (_Component) {
 exports.TableRow = TableRow;
 ;
 
+var FotoRow = (function (_Component2) {
+  function FotoRow() {
+    _classCallCheck(this, FotoRow);
+
+    if (_Component2 != null) {
+      _Component2.apply(this, arguments);
+    }
+  }
+
+  _inherits(FotoRow, _Component2);
+
+  _createClass(FotoRow, [{
+    key: 'render',
+    value: function render() {
+      var fotoUrl = '' + this.props.fotoPath + 'IMG_' + this.props.photoID + '.JPG';
+      var style = {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        'backgroundImage': 'url(' + fotoUrl + ')',
+        'backgroundRepeat': 'no-repeat',
+        'backgroundSize': 'contain'
+      };
+
+      return _React2['default'].createElement(
+        'tr',
+        null,
+        _React2['default'].createElement('td', null),
+        _React2['default'].createElement(
+          'td',
+          { style: { 'position': 'relative', 'height': '200px' } },
+          _React2['default'].createElement('div', { style: style })
+        )
+      );
+    }
+  }]);
+
+  return FotoRow;
+})(_React.Component);
+
+exports.FotoRow = FotoRow;
+;
+
 },{"../i18n/i18n":219,"babel-runtime/core-js/object/define-property":5,"babel-runtime/helpers/class-call-check":10,"babel-runtime/helpers/create-class":11,"babel-runtime/helpers/inherits":13,"babel-runtime/helpers/interop-require-default":14,"react":215}],222:[function(require,module,exports){
 'use strict';
 
@@ -22081,7 +22137,7 @@ var _React = require('react');
 
 var _React2 = _interopRequireDefault(_React);
 
-var _TableRow = require('./rows');
+var _TableRow$FotoRow = require('./rows');
 
 var ProtectionContent = (function (_Component) {
   function ProtectionContent(props) {
@@ -22101,20 +22157,16 @@ var ProtectionContent = (function (_Component) {
       for (var i in this._dataKeys) {
         var key = this._dataKeys[i];
         if (key === 'IdFotografieZdroje') {
-          var fotoUrl = '' + this.props.fotoPath + 'IMG_' + this.props.data[key] + '.JPG';
-          var rowI = _React2['default'].createElement(
-            'tr',
-            { key: i },
-            _React2['default'].createElement('td', null),
-            _React2['default'].createElement(
-              'td',
-              null,
-              _React2['default'].createElement('div', { style: { background: 'url(' + fotoUrl + ')' } })
-            )
-          );
-          rows.push(rowI);
+          rows.push(_React2['default'].createElement(_TableRow$FotoRow.FotoRow, {
+            key: i,
+            fotoPath: this.props.fotoPath,
+            photoID: this.props.data[key],
+            property: key }));
         } else {
-          rows.push(_React2['default'].createElement(_TableRow.TableRow, { key: i, property: key, val: this.props.data[key] }));
+          rows.push(_React2['default'].createElement(_TableRow$FotoRow.TableRow, {
+            key: i,
+            property: key,
+            val: this.props.data[key] }));
         }
       }
 
@@ -22348,7 +22400,7 @@ var _React = require('react');
 
 var _React2 = _interopRequireDefault(_React);
 
-var _TableRow = require('./rows');
+var _TableRow$FotoRow = require('./rows');
 
 var ProtectionContent = (function (_Component) {
   function ProtectionContent(props) {
@@ -22367,7 +22419,19 @@ var ProtectionContent = (function (_Component) {
       var rows = [];
       for (var i in this._dataKeys) {
         var key = this._dataKeys[i];
-        rows.push(_React2['default'].createElement(_TableRow.TableRow, { key: i, property: key, val: this.props.data[key] }));
+
+        if (key === 'ZnecisteniFoto') {
+          rows.push(_React2['default'].createElement(_TableRow$FotoRow.FotoRow, {
+            key: i,
+            fotoPath: this.props.fotoPath,
+            photoID: this.props.data[key],
+            property: key }));
+        } else {
+          rows.push(_React2['default'].createElement(_TableRow$FotoRow.TableRow, {
+            key: i,
+            property: key,
+            val: this.props.data[key] }));
+        }
       }
 
       return _React2['default'].createElement(
@@ -22470,7 +22534,9 @@ var WellInfo = (function (_Component) {
           content = _React2['default'].createElement(_TabIdentification2['default'], { data: data });
           break;
         case 'second':
-          content = _React2['default'].createElement(_TabProtection2['default'], { data: data });
+          content = _React2['default'].createElement(_TabProtection2['default'], {
+            data: data,
+            fotoPath: fotoPath ? fotoPath : null });
           break;
         case 'thirth':
           content = _React2['default'].createElement(_TabMeasurement2['default'], { data: data });
@@ -22479,7 +22545,9 @@ var WellInfo = (function (_Component) {
           content = _React2['default'].createElement(_TabAnalyze2['default'], { data: data });
           break;
         case 'fifth':
-          content = _React2['default'].createElement(_TabAbout2['default'], { data: data, fotoPath: fotoPath ? fotoPath : null });
+          content = _React2['default'].createElement(_TabAbout2['default'], {
+            data: data,
+            fotoPath: fotoPath ? fotoPath : null });
           break;
         default:
           content = null;
@@ -22501,10 +22569,15 @@ var WellInfo = (function (_Component) {
       } else {
         console.log(this.props.data);
         var content = this.getContent(this.props.activeTab, this.props.data);
+        var style = {
+          display: this.props.isVisible ? 'block' : 'none'
+        };
 
         return _React2['default'].createElement(
           'div',
-          { className: 'wellInfo', style: { display: this.props.isVisible ? 'block' : 'none' } },
+          {
+            className: 'wellInfo',
+            style: style },
           _React2['default'].createElement(_NavBar2['default'], { activeTab: this.props.activeTab }),
           _React2['default'].createElement(
             'div',
@@ -22589,7 +22662,7 @@ var WellFilter = (function () {
         filteredIds.push(wellsByCharacter);
       }
       if (filteredIds.length > 0) {
-        return this.array_intersect.apply(this, filteredIds);
+        return this.arrayIntersect.apply(this, filteredIds);
       } else {
         return null;
       }
@@ -22627,7 +22700,8 @@ var WellFilter = (function () {
       }
 
       var intersection;
-      var first, second;
+      var first;
+      var second;
       for (var i = 0; i < filteredIds.length - 1; i++) {
         first = new _Set(filteredIds[i]);
         second = new _Set(filteredIds[i + 1]);
@@ -22641,30 +22715,25 @@ var WellFilter = (function () {
       return _Array$from(intersection);
     }
   }, {
-    key: 'array_intersect',
+    key: 'arrayIntersect',
 
     /**
      * arrays for intersection as a params
      * tuned up https://gist.github.com/lovasoa/3361645
      */
-    value: function array_intersect() {
+    value: function arrayIntersect() {
       if (arguments.length === 1) {
         return arguments[0];
       }
 
-      var i,
-          all,
-          shortest,
-          nShortest,
-          n,
-          len,
-          ret = [],
-          obj = {},
-          nOthers;
-      nOthers = arguments.length - 1;
-      nShortest = arguments[0].length;
-      shortest = 0;
-      for (i = 0; i <= nOthers; i++) {
+      var n = undefined;
+      var len = undefined;
+      var ret = [];
+      var obj = {};
+      var nOthers = arguments.length - 1;
+      var nShortest = arguments[0].length;
+      var shortest = 0;
+      for (var i = 0; i <= nOthers; i++) {
         n = arguments[i].length;
         if (n < nShortest) {
           shortest = i;
@@ -22672,7 +22741,7 @@ var WellFilter = (function () {
         }
       }
 
-      for (i = 0; i <= nOthers; i++) {
+      for (var i = 0; i <= nOthers; i++) {
         n = i === shortest ? 0 : i || shortest; //Read the shortest array first. Read the first array instead of the shortest
         len = arguments[n].length;
         for (var j = 0; j < len; j++) {
@@ -22944,26 +23013,22 @@ var ImportanceFilter = (function (_Component2) {
           _React2['default'].createElement(
             'option',
             { value: '0', key: 0 },
-            _msg.msg('null'),
-            ' '
+            _msg.msg('allItems')
           ),
           _React2['default'].createElement(
             'option',
             { value: '1', key: 1 },
-            _msg.msg('extremely'),
-            ' '
+            _msg.msg('extremely')
           ),
           _React2['default'].createElement(
             'option',
             { value: '2', key: 2 },
-            _msg.msg('middle'),
-            ' '
+            _msg.msg('middle')
           ),
           _React2['default'].createElement(
             'option',
             { value: '3', key: 3 },
-            _msg.msg('low'),
-            ' '
+            _msg.msg('low')
           )
         )
       );
@@ -23017,26 +23082,22 @@ var CharacterFilter = (function (_Component3) {
           _React2['default'].createElement(
             'option',
             { value: '0', key: 0 },
-            _msg.msg('null'),
-            ' '
+            _msg.msg('allItems')
           ),
           _React2['default'].createElement(
             'option',
             { value: '1', key: 1 },
-            _msg.msg('well'),
-            ' '
+            _msg.msg('well')
           ),
           _React2['default'].createElement(
             'option',
             { value: '2', key: 2 },
-            _msg.msg('fountain'),
-            ' '
+            _msg.msg('fountain')
           ),
           _React2['default'].createElement(
             'option',
             { value: '3', key: 3 },
-            _msg.msg('drill'),
-            ' '
+            _msg.msg('drill')
           )
         )
       );
